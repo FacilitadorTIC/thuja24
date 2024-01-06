@@ -9,14 +9,16 @@ if [ ! -d "Thuja24" ]; then mkdir Thuja24; fi
 #~ Ingresamos
 cd Thuja24
 
+# Recordar de crear en la carpeta ThujaFiles en la cuenta local del usuario (los .conf y el lsb-release)
+
 #~ Setear lb config 
 lb config --binary-images iso-hybrid --mode debian -d bookworm -a amd64 -k amd64 --linux-packages "linux-image linux-headers" --archive-areas "main contrib non-free non-free-firmware" --cache true --apt-recommends true --debian-installer live --debian-installer-gui true --win32-loader false --bootappend-live "boot=live components live-config.locales=es_ES.UTF-8 live-config.timezone=America/Argentina/Catamarca live-config.keyboard-layouts=latam live-config.user-default-groups=cdrom,floppy,audio,video,plugdev,netdev,dialout" --iso-application "Debian Bookworm" --iso-preparer "Thuja" --iso-publisher "Thuja" --image-name "Thuja" 
 
 #~ Crea dir para setear calamares
 if [ ! -d "config/includes.chroot/etc/calamares/modules" ]; then mkdir -p config/includes.chroot/etc/calamares/modules; fi
 
-#~ Crea directorio para resguardar resultados para comparar.
-if [ ! -d "config/includes.chroot/usr/share/hardinfo" ]; then mkdir -p config/includes.chroot/usr/share/hardinfo; fi
+#~ Crea directorio para resguardar resultados para comparar. Al usarlo, incorporar paquete   hardinfo \
+#~ if [ ! -d "config/includes.chroot/usr/share/hardinfo" ]; then mkdir -p config/includes.chroot/usr/share/hardinfo; fi
 
 #~ Entradas típicas para crear Live Image.
 echo "live-boot" > config/package-lists/live.list.chroot
@@ -44,7 +46,6 @@ if [ ! -f config/packages.lists/desktop.list.chroot ]; then
   galculator \
   geany \
   gparted \
-  hardinfo \
   intel-microcode \
   inxi \
   lightdm \
@@ -63,7 +64,7 @@ if [ ! -f config/packages.lists/desktop.list.chroot ]; then
 fi
 
 #~ copiar resultados de hardinfo a la ubicación correcta.
-cp ~/ThujaFiles/bm.conf.new config/includes.chroot/usr/share/hardinfo/benchmark.conf
+#~ cp ~/ThujaFiles/bm.conf.new config/includes.chroot/usr/share/hardinfo/benchmark.conf
 
 #~ Copiar preferencias para Calamares.
 #~ Añade groupos a preferencia y usuario al grupo sudo; también setea autologin y root password coincidente con usuarios.
